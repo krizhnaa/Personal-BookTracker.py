@@ -7,7 +7,9 @@
   <body>
     <h1>My Library</h1>
     <ul>
-      <li></li>
+      {% for data in db %}
+      <li>Book : {{ data.book }}, Author : {{ data.author }}, Rating : {{ data.rating }}</li>
+      {% endfor %}
     </ul>
     <a href="{{ url_for('add') }}">Add New Book</a>
   </body>

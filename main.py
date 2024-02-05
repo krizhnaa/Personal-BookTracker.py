@@ -15,7 +15,8 @@ class NewBookCollection(db.Model):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    dbms = NewBookCollection.query.all()
+    return render_template('index.html', db=dbms)
 
 
 @app.route("/add", methods=['GET', 'POST'])
@@ -32,6 +33,8 @@ def add():
             data = NewBookCollection(id=id_count+1, book=bookname, author=author, rating=rating)
             db.session.add(data)
             db.session.commit()
+        dbms = NewBookCollection.query.all()
+        return render_template('index.html', db=dbms)
     return render_template('add.html')
 
 

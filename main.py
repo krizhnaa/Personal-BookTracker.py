@@ -13,15 +13,6 @@ class NewBookCollection(db.Model):
     rating = db.Column(db.Float, unique=False, nullable=False)
 
 
-# with app.app_context():
-#     db.create_all()
-
-# with app.app_context():
-#     book = db.session.execute(db.select(NewBookCollection).where(NewBookCollection.id == 1)).scalar()
-#     db.session.delete(book)
-#     db.session.commit()
-
-
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -33,7 +24,14 @@ def add():
         bookname = request.form.get('bookname')
         author = request.form.get('author')
         rating = float(request.form.get('rating'))
-        return f'Thank you, {bookname}, {author}, {rating}!'
+        with app.app_context():
+            id_count = db.session.query(db.func.max(NewBookCollection.id)).scalar()
+            print(id_count)
+            if id_count == None:
+                id_count = 0
+            data = NewBookCollection(id=id_count+1, book=bookname, author=author, rating=rating)
+            db.session.add(data)
+            db.session.commit()
     return render_template('add.html')
 
 

@@ -46,10 +46,11 @@ class BookCollection(db.Model):
 #     db.session.commit()
 
 
-# @app.route("/")
-# def home():
-#     return render_template("index.html")
-#
-#
-# if __name__ == '__main__':
-#     app.run(debug=True)
+@app.route("/")
+def home():
+    dbms = BookCollection.query.all()
+    return render_template("index.html", db=dbms)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

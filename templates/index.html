@@ -1,26 +1,25 @@
 {% extends 'base.html' %}
 
-{% block title %}My Top 10 Movies{% endblock %}
+{% block title %}My Book Ranking{% endblock %}
 
 {% block content %}
 <div class="container">
-  <h1 class="heading">My Top 10 Movies</h1>
-  <p class="description">These are my all-time favourite movies.</p>
-   
+  <h1 class="heading">My Book Ranking</h1>
+  <p class="description">These are the rankings of the book i have read.</p>
+    {% for data in db %}
   <div class="card" >
-    <div class="front" style="background-image: url('https://www.shortlist.com/media/images/2019/05/the-30-coolest-alternative-movie-posters-ever-2-1556670563-K61a-column-width-inline.jpg');">
-        <p class="large">1</p>
+    <div class="front" style="background-image: url('{{data.img_url}}');">
+        <p class="large">{{ data.ranking }}</p>
     </div>
     <div class="back">
       <div>
-    <div class="title">Drive <span class="release_date">(2011)</span></div>
+    <div class="title">{{ data.title }} <span class="release_date">({{ data.year }})</span></div>
         <div class="rating">
-            <label>7.5</label>
+            <label>{{ data.rating }}</label>
           <i class="fas fa-star star"></i>
         </div>
-          <p class="review">"Loved it!"</p>
         <p class="overview">
-            A mysterious Hollywood stuntman and mechanic moonlights as a getaway driver and finds himself in trouble when he helps out his neighbor in this action drama.
+            {{ data.description }}
         </p>
 
         <a href="#" class="button">Update</a>
@@ -29,9 +28,10 @@
       </div>
     </div>
   </div>
+    {% endfor %}
 </div>
 <div class="container text-center add">
-<a href="#" class="button">Add Movie</a>
+<a href="#" class="button">Add Book</a>
 </div>
 
 {% endblock %}

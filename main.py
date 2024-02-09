@@ -50,6 +50,32 @@ class Editform(FlaskForm):
     submit = SubmitField('Submit')
 
 
+class Addform(FlaskForm):
+    book = StringField('Which Book to add?', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
+def search_book(title):
+    url = f"https://www.googleapis.com/books/v1/volumes?q={title}&maxResults=1"
+    response = requests.get(url)
+    data = response.json()
+    if "items" in data and data["items"]:
+        book_info = data["items"][0]["volumeInfo"]
+        book_title = book_info.get("title", "Title not available")
+        authors = book_info.get("authors", ["Author not available"])
+        author = authors[0] if authors else "Author not available"
+        year = book_info.get("publishedDate", "Year not available")
+        img_url = book_info.get("imageLinks", {}).get("thumbnail", "Image URL not available")
+        return {
+            "title": book_title,
+            "author": author,
+            "year": year,
+            "img_url": img_url
+        }
+    else:
+        return None
+
+
 @app.route("/")
 def home():
     dbms = BookCollection.query.all()
@@ -78,6 +104,33 @@ def delete(bookname):
         db.session.delete(book)
         db.session.commit()
     return redirect(url_for('home'))
+
+
+@app.route("/add", methods=['GET', 'POST'])
+def add():
+    form = Addform()
+    if form.validate_on_submit():
+        searchname = form.book.data
+        book_info = search_book(searchname)
+        with app.app_context():
+            id_count = db.session.query(db.func.max(BookCollection.id)).scalar()
+            rank_count = db.session.query(db.func.max(BookCollection.ranking)).scalar()
+            print(id_count)
+            if id_count == None:
+                id_count = 0
+            data = BookCollection(id=id_count + 1,
+                                  title=book_info["title"],
+                                  year=int(book_info["year"][:4]),
+                                  description="Null",
+                                  author=book_info["author"],
+                                  rating=0,
+                                  ranking=rank_count + 1,
+                                  img_url=book_info["img_url"]
+                                  )
+            db.session.add(data)
+            db.session.commit()
+        return redirect(url_for('home'))
+    return render_template("add.html", form=form)
 
 
 if __name__ == '__main__':

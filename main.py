@@ -78,8 +78,10 @@ def search_book(title):
 
 @app.route("/")
 def home():
-    dbms = BookCollection.query.all()
-    return render_template("index.html", db=dbms)
+    books = BookCollection.query.order_by(BookCollection.rating.desc()).all()
+    for i, book in enumerate(books):
+        book.ranking = i + 1
+    return render_template("index.html", db=books)
 
 
 @app.route("/edit/<bookname>", methods=['GET', 'POST'])

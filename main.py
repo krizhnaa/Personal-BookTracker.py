@@ -1,8 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import Integer, String, Float
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FloatField
 from wtforms.validators import DataRequired
@@ -69,9 +67,17 @@ def edit(bookname):
             book.rating = rating
             book.description = review
             db.session.commit()
-        dbms = BookCollection.query.all()
-        return render_template("index.html", db=dbms)
+        return redirect(url_for('home'))
     return render_template("edit.html", form=form)
+
+
+@app.route("/deleting/<bookname>")
+def delete(bookname):
+    with app.app_context():
+        book = BookCollection.query.filter_by(title=bookname).first()
+        db.session.delete(book)
+        db.session.commit()
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':

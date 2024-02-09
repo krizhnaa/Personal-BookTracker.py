@@ -61,11 +61,16 @@ def home():
 @app.route("/edit/<bookname>", methods=['GET', 'POST'])
 def edit(bookname):
     form = Editform()
-    # dbms = BookCollection.query.all()
     if form.validate_on_submit():
         rating = form.rating.data
         review = form.review.data
-        return f"The Rating is : {rating} and review : {review}"
+        with app.app_context():
+            book = BookCollection.query.filter_by(title=bookname).first()
+            book.rating = rating
+            book.description = review
+            db.session.commit()
+        dbms = BookCollection.query.all()
+        return render_template("index.html", db=dbms)
     return render_template("edit.html", form=form)
 
 

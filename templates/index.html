@@ -22,7 +22,7 @@
             {{ data.description }}
         </p>
 
-        <a href="#" class="button">Update</a>
+        <a href="{{ url_for('edit', bookname=data.title) }}" class="button">Update</a>
         <a href="#" class="button delete-button">Delete</a>
 
       </div>

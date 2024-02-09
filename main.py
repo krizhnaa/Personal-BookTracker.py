@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Float
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, FloatField
 from wtforms.validators import DataRequired
 import requests
 
@@ -46,10 +46,27 @@ class BookCollection(db.Model):
 #     db.session.commit()
 
 
+class Editform(FlaskForm):
+    rating = FloatField('Rating Out of 10', validators=[DataRequired()])
+    review = StringField('Review', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
 @app.route("/")
 def home():
     dbms = BookCollection.query.all()
     return render_template("index.html", db=dbms)
+
+
+@app.route("/edit/<bookname>", methods=['GET', 'POST'])
+def edit(bookname):
+    form = Editform()
+    # dbms = BookCollection.query.all()
+    if form.validate_on_submit():
+        rating = form.rating.data
+        review = form.review.data
+        return f"The Rating is : {rating} and review : {review}"
+    return render_template("edit.html", form=form)
 
 
 if __name__ == '__main__':

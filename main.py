@@ -26,24 +26,6 @@ class BookCollection(db.Model):
     img_url = db.Column(db.String(100), unique=True, nullable=False)
 
 
-# with app.app_context():
-#     id_count = db.session.query(db.func.max(BookCollection.id)).scalar()
-#     print(id_count)
-#     if id_count == None:
-#         id_count = 0
-#     data = BookCollection(id=id_count + 1,
-#                           title="Zen: The Art of Simple Living",
-#                           year=2019,
-#                           description="This book explores the principles of Zen philosophy and how they can be applied to everyday life to achieve simplicity, clarity, and inner peace. It offers practical wisdom and guidance on various aspects of life, including mindfulness, minimalism, and living in the present moment.",
-#                           author="Shunmyo Masuno",
-#                           rating=8.5,
-#                           ranking=9,
-#                           img_url="https://m.media-amazon.com/images/I/41rkNNOWURL.jpg"
-#                           )
-#     db.session.add(data)
-#     db.session.commit()
-
-
 class Editform(FlaskForm):
     rating = FloatField('Rating Out of 10', validators=[DataRequired()])
     review = StringField('Review', validators=[DataRequired()])

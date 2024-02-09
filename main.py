@@ -129,7 +129,7 @@ def add():
                                   )
             db.session.add(data)
             db.session.commit()
-        return redirect(url_for('home'))
+        return redirect(url_for('edit', bookname=book_info["title"]))
     return render_template("add.html", form=form)
 
 

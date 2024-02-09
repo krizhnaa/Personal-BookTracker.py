@@ -2,7 +2,7 @@
 
 ![Untitled Project](https://github.com/krizhnaa/Personal-BookTracker.py/assets/86138069/8846e4f3-1e01-4d8a-a7d6-a2572e409a71)
 
->> User being able to add any book to the database:
+>> User being able to add any book to the database ( Exact Name, Author, Year and Image URL fetched using Google books API ) :
 
 ![Untitled Project1](https://github.com/krizhnaa/Personal-BookTracker.py/assets/86138069/45e9b257-3ba4-48a8-a612-a04d8fed29c3)
 

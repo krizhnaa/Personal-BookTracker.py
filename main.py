@@ -99,6 +99,8 @@ def add():
         with app.app_context():
             id_count = db.session.query(db.func.max(BookCollection.id)).scalar()
             rank_count = db.session.query(db.func.max(BookCollection.ranking)).scalar()
+            if book_info["year"] == "Year not available":
+                book_info["year"] = "00000"
             print(id_count)
             if id_count == None:
                 id_count = 0

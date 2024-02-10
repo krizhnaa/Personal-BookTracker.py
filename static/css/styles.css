@@ -11,8 +11,8 @@
  body {
 	 margin: 0;
 	 padding: 0;
-	 height: 100vh;
-	 background-color: #ecf0f9;
+	 height: 140vh;
+	 background-color: #000000;
 	 background-attachment: fixed;
 }
 .large {
@@ -35,40 +35,67 @@
 }
  .heading {
 	 width: 100%;
+	 color: #fff;
+	 text-align: center;
 	 margin-left: 1rem;
 	 font-weight: 900;
 	 font-size: 1.618rem;
 	 text-transform: uppercase;
-	 letter-spacing: 0.1ch;
+	 letter-spacing: 0.15ch;
 	 line-height: 1;
 	 padding-bottom: 0.5em;
 	 margin-bottom: 1rem;
+	 margin-top: 50px;
 	 position: relative;
 }
  .heading:after {
-	 display: block;
-	 content: '';
-	 position: absolute;
-	 width: 60px;
-	 height: 4px;
-	 background: linear-gradient(135deg, #1a9be6, #1a57e6);
-	 bottom: 0;
+    display: block;
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(135deg, #FFFFFF, #F0F0F0);
+    bottom: 0;
+    left: 50%; /* Center the pseudo-element horizontally */
+    transform: translateX(-50%); /* Adjust to center the pseudo-element horizontally */
 }
  .description {
+     text-align: center;
 	 width: 100%;
-	 margin-top: 0;
+	 margin-top: 10px;
 	 margin-left: 1rem;
 	 margin-bottom: 3rem;
+	 color: #fff;
 }
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+label.form-label {
+    color: white; /* Change to the color you desire */
+}
+
+#submit {
+    display: block;
+    background: linear-gradient(135deg, #030637, #3C0753);
+    margin: 0 auto;
+    border: 0px solid white;
+}
+
+
  .card {
 	 color: inherit;
 	 cursor: pointer;
-	 width: calc(33% - 3rem);
+	 width: calc(33.33% - 30px);
 	 min-width: calc(33% - 3rem);
 	 height: 400px;
 	 min-height: 400px;
 	 perspective: 1000px;
 	 margin: 1rem auto;
+	 margin-bottom: 20px;
 	 position: relative;
 }
  @media screen and (max-width: 800px) {
@@ -114,8 +141,8 @@
 	 left: 0;
 	 right: 0;
 	 bottom: 0;
-	 background: linear-gradient(135deg, #1a9be6, #1a57e6);
-	 opacity: 0.25;
+	 background: linear-gradient(135deg, #27374D, #720455);
+     opacity: 0.40; /* Adjust opacity as needed */
 	 z-index: -1;
 }
  .card:hover .front {
@@ -138,21 +165,23 @@
  .card:nth-child(even):hover .back {
 	 transform: rotateY(0deg);
 }
- .button {
-	 transform: translateZ(40px);
-	 cursor: pointer;
-	 -webkit-backface-visibility: hidden;
-	 backface-visibility: hidden;
-	 font-weight: bold;
-	 color: #fff;
-	 padding: 0.5em 1em;
-	 border-radius: 100px;
-	 font: inherit;
-	 background: linear-gradient(135deg, #1a9be6, #1a57e6);
-	 border: none;
-	 position: relative;
-	 transform-style: preserve-3d;
-	 transition: 300ms ease;
+.button {
+    transform: translateZ(40px);
+    cursor: pointer;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    padding: 0.5em 1em;
+    border-radius: 100px;
+    font: inherit;
+    background: linear-gradient(135deg, #030637, #3C0753);
+    border: none;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: 300ms ease;
+    text-decoration: none;
 }
  .button:before {
 	 transition: 300ms ease;
@@ -193,10 +222,12 @@
 	 top: 12px;
 	 top: 12px;
 }
-.container.add {
+.container.text-center.add {
     margin-top: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 20px !important;
 }
+
+
 .rating {
     color: #E4BB23;
 }

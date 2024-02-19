@@ -29,6 +29,9 @@ class BookCollection(db.Model):
     ranking = db.Column(db.Integer, nullable=False)
     img_url = db.Column(db.String(100), unique=True, nullable=False)
 
+with app.app_context():
+    db.create_all()
+
 
 class Editform(FlaskForm):
     rating = FloatField('Rating Out of 10', validators=[DataRequired()])
@@ -65,8 +68,11 @@ def search_book(title):
 @app.route("/")
 def home():
     books = BookCollection.query.order_by(BookCollection.rating.desc()).all()
-    for i, book in enumerate(books):
-        book.ranking = i + 1
+    with app.app_context():
+        empty = BookCollection.query.first() is None
+    if not empty:
+        for i, book in enumerate(books):
+            book.ranking = i + 1
     return render_template("index.html", db=books)
 
 
@@ -106,8 +112,10 @@ def add():
             if book_info["year"] == "Year not available":
                 book_info["year"] = "00000"
             print(id_count)
-            if id_count == None:
+            if id_count is None:
                 id_count = 0
+            if rank_count is None:
+                rank_count = 0
             data = BookCollection(id=id_count + 1,
                                   title=book_info["title"],
                                   year=int(book_info["year"][:4]),

@@ -1,4 +1,4 @@
-requirements.txt
+.DS_Store
 venv/
 .idea/
-instance/
+instance/books-collection.db

@@ -6,6 +6,7 @@ from wtforms import StringField, SubmitField, FloatField
 from wtforms.validators import DataRequired
 import os
 from dotenv import find_dotenv, load_dotenv
+import requests
 
 dotenv_path = find_dotenv()
 load_dotenv(dotenv_path)
